@@ -38,24 +38,54 @@
 
 #     print(response)
 
+# from agent.core.planner import Planner
+# from agent.core.executor import Executor
+
+
+# class Agent:
+
+#     def __init__(self, name):
+
+#         self.name = name
+#         self.planner = Planner()
+#         self.executor = Executor()
+
+
+#     def run(self, task):
+
+#         plan = self.planner.create_plan(task)
+
+#         result = self.executor.execute(plan)
+
+#         return {
+#             "agent": self.name,
+#             "plan": plan,
+#             "result": result
+#         }
+
 from agent.core.planner import Planner
 from agent.core.executor import Executor
 
 
 class Agent:
 
-    def __init__(self, name):
+    def __init__(self, name, tool_registry=None):
 
         self.name = name
         self.planner = Planner()
-        self.executor = Executor()
+
+        self.executor = Executor(
+            tool_registry
+        )
 
 
     def run(self, task):
 
         plan = self.planner.create_plan(task)
 
-        result = self.executor.execute(plan)
+        result = self.executor.execute(
+            plan
+        )
 
         return {
             "agent": self.name,
