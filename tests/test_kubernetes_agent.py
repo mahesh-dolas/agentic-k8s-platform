@@ -10,8 +10,7 @@ class MockLLM:
 def test_kubernetes_agent():
 
     agent = KubernetesAgent(
-        MockLLM(),
-        []
+        MockLLM()
     )
 
     response = agent.run(
