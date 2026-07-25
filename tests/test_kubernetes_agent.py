@@ -14,6 +14,7 @@ def test_kubernetes_agent():
 
     registry = create_tool_registry()
 
+
     agent = KubernetesAgent(
         MockLLM(),
         registry
@@ -30,3 +31,5 @@ def test_kubernetes_agent():
     assert "findings" in response
 
     assert "recommendations" in response
+
+    assert "next_steps" in response
