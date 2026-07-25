@@ -1,4 +1,5 @@
 from agent.core.kubernetes_planner import KubernetesPlanner
+from agent.core.diagnosis import DiagnosisEngine
 
 
 class KubernetesAgent:
@@ -8,6 +9,7 @@ class KubernetesAgent:
         self.llm = llm
         self.tool_registry = tool_registry
         self.planner = KubernetesPlanner()
+        self.diagnosis = DiagnosisEngine()
 
 
     def execute_tool(self, tool_name, input_data=None):
@@ -49,4 +51,6 @@ class KubernetesAgent:
                 }
             )
 
-        return results
+        return self.diagnosis.analyze(
+            results
+        )
