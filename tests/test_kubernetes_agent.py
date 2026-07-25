@@ -1,20 +1,25 @@
 from agent.kubernetes_agent import KubernetesAgent
+from tools.factory import create_tool_registry
 
 
 class MockLLM:
 
     def generate(self, prompt):
-        return "Analyze pods and deployments"
+        return "kubernetes_health"
 
 
 def test_kubernetes_agent():
 
+    registry = create_tool_registry()
+
     agent = KubernetesAgent(
-        MockLLM()
+        MockLLM(),
+        registry
     )
 
     response = agent.run(
-        "Why is my payment service failing?"
+        "Check Kubernetes cluster health"
     )
 
-    assert response == "Analyze pods and deployments"
+    assert response["status"] == "healthy"
+    assert response["message"] == "Kubernetes cluster is healthy"
