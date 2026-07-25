@@ -21,5 +21,8 @@ def test_kubernetes_agent():
         "Check Kubernetes cluster health"
     )
 
-    assert response["status"] == "healthy"
-    assert response["message"] == "Kubernetes cluster is healthy"
+    assert len(response) == 1
+
+    assert response[0]["tool"] == "kubernetes_health"
+
+    assert response[0]["result"]["status"] == "healthy"
