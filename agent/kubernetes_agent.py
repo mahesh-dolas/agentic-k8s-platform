@@ -2,6 +2,7 @@ from agent.core.kubernetes_planner import KubernetesPlanner
 from agent.core.diagnosis import DiagnosisEngine
 from agent.core.reasoning import ReasoningEngine
 from agent.core.incident_memory import IncidentMemory
+from agent.core.remediation import RemediationEngine
 
 
 class KubernetesAgent:
@@ -18,6 +19,8 @@ class KubernetesAgent:
         self.reasoning = ReasoningEngine()
 
         self.memory = IncidentMemory()
+
+        self.remediation = RemediationEngine()
 
 
     def execute_tool(self, tool_name, input_data=None):
@@ -40,7 +43,7 @@ class KubernetesAgent:
 
     def run(self, request):
 
-        # Step 1: Create execution plan
+        # 1. Create execution plan
 
         plan = self.planner.create_plan(
             request
@@ -50,7 +53,7 @@ class KubernetesAgent:
         results = []
 
 
-        # Step 2: Execute Kubernetes tools
+        # 2. Execute Kubernetes tools
 
         for step in plan:
 
@@ -69,14 +72,14 @@ class KubernetesAgent:
             )
 
 
-        # Step 3: Analyze tool results
+        # 3. Diagnose results
 
         diagnosis = self.diagnosis.analyze(
             results
         )
 
 
-        # Step 4: Search previous incidents
+        # 4. Check previous incidents
 
         similar_incidents = self.memory.search(
             request
@@ -86,14 +89,24 @@ class KubernetesAgent:
         diagnosis["previous_incidents"] = similar_incidents
 
 
-        # Step 5: Generate AI SRE response
+        # 5. Generate reasoning response
 
         final_response = self.reasoning.analyze(
             diagnosis
         )
 
 
-        # Step 6: Store current incident
+        # 6. Generate remediation plan
+
+        remediation_plan = self.remediation.evaluate(
+            diagnosis
+        )
+
+
+        final_response["remediation"] = remediation_plan
+
+
+        # 7. Store incident memory
 
         self.memory.remember(
             {
