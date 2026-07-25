@@ -1,9 +1,13 @@
+from agent.core.kubernetes_planner import KubernetesPlanner
+
+
 class KubernetesAgent:
 
     def __init__(self, llm, tool_registry):
 
         self.llm = llm
         self.tool_registry = tool_registry
+        self.planner = KubernetesPlanner()
 
 
     def execute_tool(self, tool_name, input_data=None):
@@ -24,31 +28,25 @@ class KubernetesAgent:
 
     def run(self, request):
 
-        available_tools = self.tool_registry.list_tools()
-
-        analysis_prompt = f"""
-You are a Kubernetes SRE Agent.
-
-Available tools:
-
-{available_tools}
-
-Analyze the following request:
-
-{request}
-
-Select the appropriate tool.
-
-Return ONLY the tool name.
-"""
-
-        tool_name = self.llm.generate(
-            analysis_prompt
+        plan = self.planner.create_plan(
+            request
         )
 
-        result = self.execute_tool(
-            tool_name,
-            {}
-        )
+        results = []
 
-        return result
+        for step in plan:
+
+            result = self.execute_tool(
+                step["tool"],
+                {}
+            )
+
+            results.append(
+                {
+                    "tool": step["tool"],
+                    "reason": step["reason"],
+                    "result": result
+                }
+            )
+
+        return results
