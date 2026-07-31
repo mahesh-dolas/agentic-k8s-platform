@@ -3,6 +3,7 @@ from agent.core.diagnosis import DiagnosisEngine
 from agent.core.reasoning import ReasoningEngine
 from agent.core.incident_memory import IncidentMemory
 from agent.core.remediation import RemediationEngine
+from agent.core.cluster_summary import ClusterHealthSummary
 
 
 class KubernetesAgent:
@@ -21,6 +22,8 @@ class KubernetesAgent:
         self.memory = IncidentMemory()
 
         self.remediation = RemediationEngine()
+
+        self.summary = ClusterHealthSummary()
 
 
     def execute_tool(self, tool_name, input_data=None):
@@ -72,7 +75,7 @@ class KubernetesAgent:
             )
 
 
-        # 3. Diagnose results
+        # 3. Diagnose Kubernetes results
 
         diagnosis = self.diagnosis.analyze(
             results
@@ -103,10 +106,22 @@ class KubernetesAgent:
         )
 
 
+        # 7. Generate unified cluster health summary
+
+        cluster_summary = self.summary.generate(
+            diagnosis,
+            remediation_plan
+        )
+
+
+        # 8. Combine final response
+
+        final_response["cluster_health"] = cluster_summary
+
         final_response["remediation"] = remediation_plan
 
 
-        # 7. Store incident memory
+        # 9. Store incident memory
 
         self.memory.remember(
             {
