@@ -1,9 +1,65 @@
 class DiagnosisEngine:
 
+    ISSUE_MAP = {
+        "CrashLoopBackOff": {
+            "severity": "Critical",
+            "message": "Application is repeatedly crashing.",
+            "recommendations": [
+                "Check pod logs",
+                "Verify environment variables",
+                "Check container configuration"
+            ]
+        },
+        "ImagePullBackOff": {
+            "severity": "Critical",
+            "message": "Unable to pull container image.",
+            "recommendations": [
+                "Verify image name",
+                "Check image registry access",
+                "Validate imagePullSecrets"
+            ]
+        },
+        "ErrImagePull": {
+            "severity": "Critical",
+            "message": "Container image pull failed.",
+            "recommendations": [
+                "Verify container image exists",
+                "Check registry credentials"
+            ]
+        },
+        "Pending": {
+            "severity": "Warning",
+            "message": "Pod cannot be scheduled.",
+            "recommendations": [
+                "Check node capacity",
+                "Review resource requests",
+                "Check node taints"
+            ]
+        },
+        "OOMKilled": {
+            "severity": "Critical",
+            "message": "Container exceeded memory limit.",
+            "recommendations": [
+                "Increase memory limits",
+                "Review application memory usage"
+            ]
+        },
+        "Failed": {
+            "severity": "Critical",
+            "message": "Pod failed.",
+            "recommendations": [
+                "Check pod events",
+                "Review application logs"
+            ]
+        }
+    }
+
+
     def analyze(self, results):
 
         findings = []
         recommendations = []
+
 
         for item in results:
 
@@ -15,14 +71,34 @@ class DiagnosisEngine:
 
                 for pod in result.get("pods", []):
 
-                    if pod["state"] != "Running":
+                    name = pod.get("name")
+                    state = pod.get("state")
 
-                        findings.append(
-                            f"{pod['name']} is {pod['state']}"
+
+                    if state != "Running":
+
+                        issue = self.ISSUE_MAP.get(
+                            state,
+                            {
+                                "severity": "Warning",
+                                "message": "Unknown pod state.",
+                                "recommendations": [
+                                    "Inspect pod status"
+                                ]
+                            }
                         )
 
-                        recommendations.append(
-                            "Check pod logs and container configuration"
+
+                        # Keep string format for backward compatibility
+                        findings.append(
+                            f"{name} is {state} - "
+                            f"{issue['severity']}: "
+                            f"{issue['message']}"
+                        )
+
+
+                        recommendations.extend(
+                            issue["recommendations"]
                         )
 
 
@@ -52,5 +128,5 @@ class DiagnosisEngine:
         return {
             "summary": "Kubernetes diagnostic analysis completed",
             "findings": findings,
-            "recommendations": recommendations
+            "recommendations": list(set(recommendations))
         }
