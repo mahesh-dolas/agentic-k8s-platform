@@ -1,3 +1,4 @@
+from tools.kubernetes.logs_tool import KubernetesLogsTool
 from tools.registry import ToolRegistry
 from tools.kubernetes.health_tool import KubernetesHealthTool
 from tools.kubernetes.events_tool import KubernetesEventsTool
@@ -26,6 +27,9 @@ def create_tool_registry():
     )
     registry.register(
     KubernetesScaleDeploymentTool()
-)
+    )
+    registry.register(
+    KubernetesLogsTool()
+    )   
 
     return registry
