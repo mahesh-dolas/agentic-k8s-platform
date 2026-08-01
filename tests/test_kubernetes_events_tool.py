@@ -11,4 +11,11 @@ def test_kubernetes_events_tool():
 
     result = tool.execute({})
 
-    assert result["status"] == "warning"
+    assert result["status"] == "success"
+
+    assert "events" in result
+
+    assert isinstance(
+        result["events"],
+        list
+    )
