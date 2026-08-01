@@ -1,0 +1,104 @@
+NAMESPACE         NAME                                                               READY   STATUS    RESTARTS   AGE
+gke-managed-cim   pod/kube-state-metrics-0                                           2/2     Running   0          105m
+gmp-system        pod/collector-rp6h6                                                2/2     Running   0          103m
+gmp-system        pod/collector-s92nn                                                2/2     Running   0          103m
+gmp-system        pod/gmp-operator-6568574688-glffv                                  1/1     Running   0          104m
+kube-system       pod/event-exporter-gke-5f5ddf6b94-mw245                            2/2     Running   0          104m
+kube-system       pod/fluentbit-gke-s7j2s                                            3/3     Running   0          103m
+kube-system       pod/fluentbit-gke-zm4r7                                            3/3     Running   0          103m
+kube-system       pod/gke-metrics-agent-rbv7f                                        3/3     Running   0          103m
+kube-system       pod/gke-metrics-agent-ssc6n                                        3/3     Running   0          103m
+kube-system       pod/konnectivity-agent-76984564d8-lrdgr                            2/2     Running   0          104m
+kube-system       pod/konnectivity-agent-76984564d8-vc6wm                            2/2     Running   0          103m
+kube-system       pod/konnectivity-agent-autoscaler-7d8c86fccf-4g5xm                 1/1     Running   0          104m
+kube-system       pod/kube-dns-8587467d96-svb78                                      4/4     Running   0          103m
+kube-system       pod/kube-dns-8587467d96-x5pjq                                      4/4     Running   0          105m
+kube-system       pod/kube-dns-autoscaler-7f8cc9f76-z8hng                            1/1     Running   0          104m
+kube-system       pod/kube-proxy-gke-agentic-ai-cluster-default-pool-aacc922f-d5qk   1/1     Running   0          103m
+kube-system       pod/kube-proxy-gke-agentic-ai-cluster-default-pool-aacc922f-v2sk   1/1     Running   0          103m
+kube-system       pod/l7-default-backend-7b8c4b9df4-kw2wq                            1/1     Running   0          104m
+kube-system       pod/metrics-server-v1.35.1-7d5b67dddc-w5m7t                        1/1     Running   0          104m
+kube-system       pod/node-local-dns-7rh6l                                           2/2     Running   0          103m
+kube-system       pod/node-local-dns-mfvpk                                           2/2     Running   0          103m
+kube-system       pod/pdcsi-node-mxdhf                                               3/3     Running   0          103m
+kube-system       pod/pdcsi-node-rj5r4                                               3/3     Running   0          103m
+
+NAMESPACE     NAME                           TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)            AGE
+default       service/kubernetes             ClusterIP   34.118.224.1     <none>        443/TCP            105m
+gmp-system    service/alertmanager           ClusterIP   None             <none>        9093/TCP           104m
+gmp-system    service/gmp-operator           ClusterIP   34.118.239.40    <none>        8443/TCP,443/TCP   104m
+gmp-system    service/rule-evaluator         ClusterIP   34.118.238.228   <none>        19092/TCP          104m
+kube-system   service/default-http-backend   NodePort    34.118.234.123   <none>        80:30930/TCP       104m
+kube-system   service/kube-dns               ClusterIP   34.118.224.10    <none>        53/UDP,53/TCP      105m
+kube-system   service/kube-dns-upstream      ClusterIP   34.118.236.78    <none>        53/UDP,53/TCP      104m
+kube-system   service/metrics-server         ClusterIP   34.118.226.252   <none>        443/TCP            104m
+
+NAMESPACE                           NAME                                                    DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR                                                        AGE
+gke-managed-networking-dra-driver   daemonset.apps/networking-dra-driver                    0         0         0       0            0           <none>                                                               104m
+gke-managed-system                  daemonset.apps/dcgm-exporter                            0         0         0       0            0           <none>                                                               104m
+gmp-system                          daemonset.apps/collector                                2         2         2       2            2           <none>                                                               104m
+kube-system                         daemonset.apps/efficiency-daemon                        0         0         0       0            0           <none>                                                               105m
+kube-system                         daemonset.apps/fluentbit-gke                            2         2         2       2            2           kubernetes.io/os=linux                                               104m
+kube-system                         daemonset.apps/fluentbit-gke-256pd                      0         0         0       0            0           kubernetes.io/os=linux                                               104m
+kube-system                         daemonset.apps/fluentbit-gke-managed-node-big           0         0         0       0            0           kubernetes.io/os=linux                                               104m
+kube-system                         daemonset.apps/fluentbit-gke-managed-node-small         0         0         0       0            0           kubernetes.io/os=linux                                               104m
+kube-system                         daemonset.apps/fluentbit-gke-max                        0         0         0       0            0           kubernetes.io/os=linux                                               104m
+kube-system                         daemonset.apps/gke-metrics-agent                        2         2         2       2            2           <none>                                                               104m
+kube-system                         daemonset.apps/gke-metrics-agent-scaling-10             0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/gke-metrics-agent-scaling-100            0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/gke-metrics-agent-scaling-20             0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/gke-metrics-agent-scaling-200            0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/gke-metrics-agent-scaling-50             0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/gke-metrics-agent-scaling-500            0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/gke-metrics-agent-windows                0         0         0       0            0           kubernetes.io/os=windows                                             104m
+kube-system                         daemonset.apps/kube-proxy                               0         0         0       0            0           kubernetes.io/os=linux,node.kubernetes.io/kube-proxy-ds-ready=true   103m
+kube-system                         daemonset.apps/maintenance-handler                      0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/metadata-proxy-v0.1                      0         0         0       0            0           cloud.google.com/metadata-proxy-ready=true,kubernetes.io/os=linux    103m
+kube-system                         daemonset.apps/nccl-fastsocket-installer                0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/node-local-dns                           2         2         2       2            2           addon.gke.io/node-local-dns-ds-ready=true                            104m
+kube-system                         daemonset.apps/nvidia-gpu-device-plugin-large-cos       0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/nvidia-gpu-device-plugin-large-ubuntu    0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/nvidia-gpu-device-plugin-medium-cos      0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/nvidia-gpu-device-plugin-medium-ubuntu   0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/nvidia-gpu-device-plugin-small-cos       0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/nvidia-gpu-device-plugin-small-ubuntu    0         0         0       0            0           <none>                                                               104m
+kube-system                         daemonset.apps/pdcsi-node                               2         2         2       2            2           kubernetes.io/os=linux                                               104m
+kube-system                         daemonset.apps/pdcsi-node-windows                       0         0         0       0            0           kubernetes.io/os=windows                                             104m
+kube-system                         daemonset.apps/runsc-metric-server                      0         0         0       0            0           kubernetes.io/os=linux,sandbox.gke.io/runtime=gvisor                 104m
+kube-system                         daemonset.apps/tpu-device-plugin                        0         0         0       0            0           <none>                                                               103m
+
+NAMESPACE     NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+default       deployment.apps/nginx-demo                      0/0     0            0           18m
+gmp-system    deployment.apps/gmp-operator                    1/1     1            1           104m
+gmp-system    deployment.apps/rule-evaluator                  0/0     0            0           104m
+kube-system   deployment.apps/event-exporter-gke              1/1     1            1           105m
+kube-system   deployment.apps/konnectivity-agent              2/2     2            2           104m
+kube-system   deployment.apps/konnectivity-agent-autoscaler   1/1     1            1           104m
+kube-system   deployment.apps/kube-dns                        2/2     2            2           105m
+kube-system   deployment.apps/kube-dns-autoscaler             1/1     1            1           104m
+kube-system   deployment.apps/l7-default-backend              1/1     1            1           104m
+kube-system   deployment.apps/metrics-server-v1.35.1          1/1     1            1           104m
+
+NAMESPACE     NAME                                                       DESIRED   CURRENT   READY   AGE
+default       replicaset.apps/nginx-demo-5c86c7d69f                      0         0         0       18m
+default       replicaset.apps/nginx-demo-674b9f5c66                      0         0         0       14m
+default       replicaset.apps/nginx-demo-6cfcdbcf54                      0         0         0       13m
+default       replicaset.apps/nginx-demo-7f46b84f77                      0         0         0       14m
+default       replicaset.apps/nginx-demo-8775d55b9                       0         0         0       10m
+gmp-system    replicaset.apps/gmp-operator-6568574688                    1         1         1       104m
+gmp-system    replicaset.apps/rule-evaluator-7d4f679dbc                  0         0         0       104m
+kube-system   replicaset.apps/event-exporter-gke-5f5ddf6b94              1         1         1       105m
+kube-system   replicaset.apps/konnectivity-agent-76984564d8              2         2         2       104m
+kube-system   replicaset.apps/konnectivity-agent-autoscaler-7d8c86fccf   1         1         1       104m
+kube-system   replicaset.apps/kube-dns-8587467d96                        2         2         2       105m
+kube-system   replicaset.apps/kube-dns-autoscaler-7f8cc9f76              1         1         1       104m
+kube-system   replicaset.apps/l7-default-backend-7b8c4b9df4              1         1         1       104m
+kube-system   replicaset.apps/metrics-server-v1.35.1-69f596775f          0         0         0       104m
+kube-system   replicaset.apps/metrics-server-v1.35.1-7d5b67dddc          1         1         1       104m
+
+NAMESPACE         NAME                                  READY   AGE
+gke-managed-cim   statefulset.apps/kube-state-metrics   1/1     105m
+gmp-system        statefulset.apps/alertmanager         0/0     104m
+
+NAMESPACE         NAME                                                     REFERENCE                        TARGETS                  MINPODS   MAXPODS   REPLICAS   AGE
+gke-managed-cim   horizontalpodautoscaler.autoscaling/kube-state-metrics   StatefulSet/kube-state-metrics   memory: 31412224/400Mi   1         10        1          105m
