@@ -6,6 +6,7 @@ from agent.core.remediation import RemediationEngine
 from agent.core.cluster_summary import ClusterHealthSummary
 from agent.core.investigation import InvestigationEngine
 from agent.core.evidence import EvidenceCorrelationEngine
+from agent.core.remediation_decision import RemediationDecisionEngine
 
 
 class KubernetesAgent:
@@ -25,16 +26,19 @@ class KubernetesAgent:
 
         self.remediation = RemediationEngine()
 
+        # Phase 7.5.6
+        self.remediation_decision = RemediationDecisionEngine()
+
         self.summary = ClusterHealthSummary()
 
 
-        # Phase 7.5.3 - Autonomous Investigation Engine
+        # Phase 7.5 Autonomous Investigation
         self.investigation = InvestigationEngine(
             tool_registry
         )
 
 
-        # Phase 7.5.4 - Evidence Correlation Engine
+        # Phase 7.5.4 Evidence Correlation
         self.evidence = EvidenceCorrelationEngine()
 
 
@@ -67,7 +71,7 @@ class KubernetesAgent:
 
 
 
-        # 2. Correlate Kubernetes evidence
+        # 2. Correlate evidence
 
         incident_evidence = self.evidence.correlate(
             investigation
@@ -106,19 +110,14 @@ class KubernetesAgent:
 
 
 
-        # 5. Diagnose Kubernetes results
+        # 5. Diagnose Kubernetes state
 
         diagnosis = self.diagnosis.analyze(
             results
         )
 
 
-        # Add investigation evidence
-
         diagnosis["investigation"] = investigation
-
-
-        # Add correlated incident evidence
 
         diagnosis["incident"] = incident_evidence
 
@@ -135,7 +134,7 @@ class KubernetesAgent:
 
 
 
-        # 7. Generate reasoning response
+        # 7. Generate reasoning
 
         final_response = self.reasoning.analyze(
             diagnosis
@@ -143,7 +142,7 @@ class KubernetesAgent:
 
 
 
-        # 8. Generate remediation plan
+        # 8. Generate remediation recommendations
 
         remediation_plan = self.remediation.evaluate(
             diagnosis
@@ -151,7 +150,15 @@ class KubernetesAgent:
 
 
 
-        # 9. Generate unified cluster health summary
+        # 9. Generate autonomous remediation decision
+
+        remediation_decision = self.remediation_decision.decide(
+            diagnosis
+        )
+
+
+
+        # 10. Cluster health summary
 
         cluster_summary = self.summary.generate(
             diagnosis,
@@ -160,19 +167,35 @@ class KubernetesAgent:
 
 
 
-        # 10. Combine final response
+        # 11. Final response
 
-        final_response["cluster_health"] = cluster_summary
-
-        final_response["investigation"] = investigation
-
-        final_response["incident"] = incident_evidence
-
-        final_response["remediation"] = remediation_plan
+        final_response["cluster_health"] = (
+            cluster_summary
+        )
 
 
+        final_response["investigation"] = (
+            investigation
+        )
 
-        # 11. Store incident memory
+
+        final_response["incident"] = (
+            incident_evidence
+        )
+
+
+        final_response["remediation"] = (
+            remediation_plan
+        )
+
+
+        final_response["remediation_decision"] = (
+            remediation_decision
+        )
+
+
+
+        # 12. Store incident memory
 
         self.memory.remember(
             {
